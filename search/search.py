@@ -79,8 +79,15 @@ def in_list(ch , elems):
         if ch == elem[0]:
             return False
     return True
+    
+def in_heap(ch , elems):
+    for elem in elems:
+        if ch == elem[2][0]:
+            return False
+    return True
 
 def depthFirstSearch(problem: SearchProblem):
+
     """
     Search the deepest nodes in the search tree first.
 
@@ -136,6 +143,23 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    sets = set()
+    queue = PriorityQueue()
+    start = problem.getStartState()
+    sets.add(start)
+    queue.push((start ,[]) ,0 )
+    while not queue.isEmpty():
+        node = queue.pop()
+        sets.add(node[0])
+        if problem.isGoalState(node[0]):
+            return node[1]
+        else:
+            for curr in problem.getSuccessors(node[0]):
+                if curr[0] not in sets and in_heap(curr[0] , queue.heap):
+                    # import pdb;pdb.set_trace()
+                    node_list = node[1].copy()
+                    node_list.append(curr[1])
+                    queue.push((curr[0] , node_list ), curr[2])
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
