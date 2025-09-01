@@ -74,7 +74,12 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-    
+def in_list(ch , elems):
+    for elem in elems:
+        if ch == elem[0]:
+            return False
+    return True
+
 def depthFirstSearch(problem: SearchProblem):
     """
     Search the deepest nodes in the search tree first.
@@ -95,7 +100,6 @@ def depthFirstSearch(problem: SearchProblem):
     start = problem.getStartState()
     sets.add(start)
     stack.push((start ,[]))
-    #import pdb; pdb.set_trace()
     while not stack.isEmpty():
         node = stack.pop()
         sets.add(node[0])
@@ -103,18 +107,32 @@ def depthFirstSearch(problem: SearchProblem):
             return node[1]
         else:
             for curr in problem.getSuccessors(node[0]):
-                if curr[0] not in sets and curr[0] not in stack.list:
+                # import pdb; pdb.set_trace()
+                if curr[0] not in sets:
                     node_list = node[1].copy()
                     node_list.append(curr[1])
                     stack.push((curr[0] , node_list))
-    #util.raiseNotDefined()
         
-
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
-
+    sets = set()
+    queue = Queue()
+    start = problem.getStartState()
+    sets.add(start)
+    queue.push((start ,[]))
+    while not queue.isEmpty():
+        node = queue.pop()
+        sets.add(node[0])
+        if problem.isGoalState(node[0]):
+            return node[1]
+        else:
+            for curr in problem.getSuccessors(node[0]):
+                if curr[0] not in sets and in_list(curr[0] , queue.list):
+                    # import pdb;pdb.set_trace()
+                    node_list = node[1].copy()
+                    node_list.append(curr[1])
+                    queue.push((curr[0] , node_list))
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
