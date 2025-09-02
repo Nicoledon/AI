@@ -108,7 +108,7 @@ def depthFirstSearch(problem: SearchProblem):
         else:
             for curr in problem.getSuccessors(node[0]):
                 # import pdb; pdb.set_trace()
-                if curr[0] not in sets:
+                if curr[0] not in sets :
                     node_list = node[1].copy()
                     node_list.append(curr[1])
                     stack.push((curr[0] , node_list))
@@ -133,6 +133,7 @@ def breadthFirstSearch(problem: SearchProblem):
                     node_list = node[1].copy()
                     node_list.append(curr[1])
                     queue.push((curr[0] , node_list))
+
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
@@ -148,6 +149,7 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+
     util.raiseNotDefined()
 
 
