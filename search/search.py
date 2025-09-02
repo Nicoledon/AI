@@ -80,6 +80,15 @@ def in_list(ch , elems):
             return False
     return True
 
+def in_heap(ch , elems ,problem:SearchProblem):
+    for elem in elems:
+        # import pdb;pdb.set_trace()
+        if problem.isGoalState(elem[2][0]):
+            return True
+        if ch == elem[2][0]:
+            return False
+    return True
+
 def depthFirstSearch(problem: SearchProblem):
     """
     Search the deepest nodes in the search tree first.
@@ -137,7 +146,23 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    sets = set()
+    queue = PriorityQueue()
+    start = problem.getStartState()
+    sets.add(start)
+    queue.push((start ,[]) , 0 )
+    while not queue.isEmpty():
+        node = queue.pop()
+        sets.add(node[0])
+        if problem.isGoalState(node[0]):
+            return node[1]
+        else:
+            for curr in problem.getSuccessors(node[0]):
+                if curr[0] not in sets and in_heap(curr[0] , queue.heap , problem):
+                    # import pdb;pdb.set_trace()
+                    node_list = node[1].copy()
+                    node_list.append(curr[1])
+                    queue.push((curr[0] , node_list) , problem.getCostOfActions(node_list))
 
 def nullHeuristic(state, problem=None):
     """
@@ -149,8 +174,23 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-
-    util.raiseNotDefined()
+    sets = set()
+    queue = PriorityQueue()
+    start = problem.getStartState()
+    sets.add(start)
+    queue.push((start ,[]) , 0 )
+    while not queue.isEmpty():
+        node = queue.pop()
+        sets.add(node[0])
+        if problem.isGoalState(node[0]):
+            return node[1]
+        else:
+            for curr in problem.getSuccessors(node[0]):
+                if curr[0] not in sets and in_heap(curr[0] , queue.heap , problem):
+                    # import pdb;pdb.set_trace()
+                    node_list = node[1].copy()
+                    node_list.append(curr[1])
+                    queue.push((curr[0] , node_list) , problem.getCostOfActions(node_list) + heuristic(curr[0] , problem))
 
 
 # Abbreviations
