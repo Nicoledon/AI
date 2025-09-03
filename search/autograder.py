@@ -346,9 +346,9 @@ if __name__ == '__main__':
 
     moduleDict = {}
     for cp in codePaths:
-        moduleName = re.match('.*?([^/]*)\.py', cp).group(1)
+        moduleName = re.match(f'.*?([^/]*)\.py', cp).group(1)
         moduleDict[moduleName] = loadModuleFile(moduleName, os.path.join(options.codeRoot, cp))
-    moduleName = re.match('.*?([^/]*)\.py', options.testCaseCode).group(1)
+    moduleName = re.match(f'.*?([^/]*)\.py', options.testCaseCode).group(1)
     moduleDict['projectTestClasses'] = loadModuleFile(moduleName, os.path.join(options.codeRoot, options.testCaseCode))
 
 
