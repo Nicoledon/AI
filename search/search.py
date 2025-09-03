@@ -112,7 +112,7 @@ def depthFirstSearch(problem: SearchProblem):
     while not stack.isEmpty():
         node = stack.pop()
         sets.add(node[0])
-        if  problem.isGoalState(node[0], stack ,sets):
+        if  problem.isGoalState(node[0]):
             return node[1]
         else:
             for curr in problem.getSuccessors(node[0]):
@@ -128,24 +128,13 @@ def breadthFirstSearch(problem: SearchProblem):
     sets = set()
     queue = Queue()
     start = problem.getStartState()
-    corner = []
-    cornel_problem = False
     # import pdb ; pdb.set_trace()
-    if len(start) == 3:
-        corner = start[2]
-        start = start[0]
-        cornel_problem = True
     sets.add(start)
     queue.push((start ,[]))
     # import pdb ; pdb.set_trace()
     while not queue.isEmpty():
         node = queue.pop()
         sets.add(node[0])
-        if cornel_problem == True and node[0] in corner:
-            corner.remove(node[0])
-            sets.clear()
-            queue.list.clear()
-            queue.push(node)
         if problem.isGoalState(node[0]):
             return node[1]
         else:
@@ -175,7 +164,7 @@ def uniformCostSearch(problem: SearchProblem):
                     node_list = node[1].copy()
                     node_list.append(curr[1])
                     queue.push((curr[0] , node_list) , problem.getCostOfActions(node_list))
-
+    
 def nullHeuristic(state, problem=None):
     """
     A heuristic function estimates the cost from the current state to the nearest
