@@ -296,15 +296,16 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        self.corners = list(self.corners)
-        return (self.startingPosition,0,self.corners)       
+        pass_corners = [corner for corner in self.corners]
+        return (self.startingPosition,tuple(pass_corners))       
 
     def isGoalState(self, state: Any):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        if len(self.corners) == 0:
+        if len(state[1]) ==1 and state[0] in state[1]:
+            print("1")
             return True
         return False
 
@@ -319,13 +320,22 @@ class CornersProblem(search.SearchProblem):
             is the incremental cost of expanding to that successor
         """
         successors = []
+        in_state = False
+        if state[0] in state[1]:
+            in_state = True
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
-            x,y = state
+            x,y = state[0]
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
+            print("state[1]: ",state[1])
             if not self.walls[nextx][nexty]:
-                nextState = (nextx, nexty)
-                successors.append( ( nextState, action, 1) )
+                if in_state:
+                    lst = list(state[1])
+                    lst.remove(state[0])
+                    nextState = ((nextx, nexty),tuple(lst))
+                else:
+                    nextState = ((nextx, nexty),state[1])
+                successors.append( (nextState, action, 1) )
         return successors
 
     def getCostOfActions(self, actions):
