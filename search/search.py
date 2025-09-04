@@ -130,7 +130,6 @@ def breadthFirstSearch(problem: SearchProblem):
     start = problem.getStartState()
     sets.add(start)
     queue.push((start ,[]))
-    # print("start: ",start[1])
     # import pdb; pdb.set_trace()
     while not queue.isEmpty():
         node = queue.pop()
@@ -138,7 +137,6 @@ def breadthFirstSearch(problem: SearchProblem):
         if problem.isGoalState(node[0]):
             return node[1]
         else:
-            print("node[0]:144 ",node[0])
             for curr in problem.getSuccessors(node[0]):
                 if curr[0] not in sets and in_list(curr[0] , queue.list):
                     node_list = node[1].copy()
@@ -193,6 +191,7 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
                     # import pdb;pdb.set_trace()
                     node_list = node[1].copy()
                     node_list.append(curr[1])
+                    # print("curr[0]: ",curr[0][1])
                     queue.push((curr[0] , node_list) , problem.getCostOfActions(node_list) + heuristic(curr[0] , problem))
 
 
