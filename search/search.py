@@ -175,11 +175,13 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+    # import pdb;pdb.set_trace()
     sets = set()
     queue = PriorityQueue()
     start = problem.getStartState()
     sets.add(start)
-    queue.push((start ,[]) , 0 )
+    queue.push((start ,[]) , 0)
+    # print("a*: ",start)
     while not queue.isEmpty():
         node = queue.pop()
         sets.add(node[0])
